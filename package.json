@@ -1,0 +1,41 @@
+{
+  "name": "gesso",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "bin": "./dist/index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "build:docker2": "docker build -t gesso/gesso .",
+    "build:docker": "docker build --tag gesso/gesso-host .",
+    "watch": "npx tsc --watch",
+    "install:queue": "docker run --name gesso-queue -p 127.0.0.1:4369:4369 -p 127.0.0.1:5671:5671 -p 127.0.0.1:5672:5672 -p 127.0.0.1:25672:25672 -p 127.0.0.1:15671:15671 -p 127.0.0.1:15672:15672 --hostname gesso-queue-host -e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest -d rabbitmq:3.7.5-management",
+    "start:queue": "docker start gesso-queue",
+    "start": "node ./dist/index.js",
+    "stop:queue": "docker stop gesso-queue",
+    "clean": "rm -rfd dist && rm -rfd node_modules",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Gubbels",
+  "license": "MIT",
+  "dependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/chalk-pipe": "^2.0.0",
+    "@types/inquirer": "^6.0.3",
+    "@types/ioredis": "^4.0.13",
+    "amqplib": "^0.5.3",
+    "chalk": "^2.4.2",
+    "chalk-pipe": "^2.0.0",
+    "inquirer": "^6.4.1",
+    "ioredis": "^4.11.1",
+    "tslint": "^5.17.0",
+    "typescript": "^3.5.1",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/amqp": "^0.2.4",
+    "@types/amqplib": "^0.5.12",
+    "@types/node": "^10.12.0",
+    "@types/uuid": "^3.4.5"
+  }
+}
