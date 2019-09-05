@@ -1,5 +1,13 @@
 # Gesso
 
+Gesso provides a distributed system for computing framework. It has the following properties:
+
+- **Distributed.**
+- **Scalable.**
+- **Self-healing.**
+- **Lends itself to organizing programs into modules.** _To understand the basic idea, one could consider the actor model of computing._
+- **Designed to pair well with graphical, iterative programming enviornments and editors.** i.e., CAD for interactive software and systems.
+
 ## Concepts
 
 ### System

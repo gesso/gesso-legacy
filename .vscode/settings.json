@@ -6,5 +6,6 @@
   },
   "[json]": {
     "editor.formatOnSave": true
-  }
+  },
+  "workbench.colorCustomizations": {}
 }

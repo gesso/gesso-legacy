@@ -1,48 +1,21 @@
-import * as command from "./command"
+import { Service } from "./bin/server/service"
+import * as server from "./bin/server"
 
-const args: string[] = process.argv.slice(2)
+import os from "os"
+import path from "path"
+import * as fs from "fs"
 
-interface IGessoOptions {
-  __args: string[]
-  command: string
+export const GESSO_PATH = path.resolve(os.homedir(), ".gesso-test")
+export const GESSO_REGISTRY_PATH: string = path.resolve(GESSO_PATH, "registry")
+
+const start = async () => {
+  const service: Service = new Service()
+  await service.initialize()
+  await service.createSchematic()
+  await service.deploySchematic()
+  await service.startEnvironment()
+
+  await server.start(service.queues)
 }
 
-const options: IGessoOptions = {
-  __args: process.argv.slice(2),
-  command: args[0]
-}
-
-// let host: Host = null
-
-if (["initialize", "init"].includes(options.command)) {
-  command.initialize()
-} else if (["start"].includes(options.command)) {
-  const optionStrings = args.slice(1)
-  command.start({
-    host: null,
-    activity:
-      optionStrings.length > 0
-        ? {
-            id: optionStrings[0]
-          }
-        : null
-  })
-} else if (["create"].includes(options.command)) {
-  const optionStrings = args.slice(1)
-  command.create({
-    name: optionStrings[0]
-  })
-} else if (["list", "ls"].includes(options.command)) {
-  command.list()
-} else if (["delete", "rm"].includes(options.command)) {
-  // Delete scripts in ~/.gesso/scripts.
-  command.delete(args.slice(1))
-} else if (["connect"].includes(options.command)) {
-  // command.connect.validate(options)
-  // command.connect.execute(options)
-  const optionStrings = args.slice(1)
-  command.connect({
-    source: optionStrings[0],
-    target: optionStrings[1]
-  })
-}
+start()
